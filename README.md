@@ -1,3 +1,12 @@
+# Movie Hub
+
+## Overview
+Movie Hub is a free movie catalog app where you can browse your favorite movies.
+
+
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
