@@ -70,8 +70,8 @@ const App = () => {
   }
    
   useEffect( () => {
-    fetchMovies(searchTerm);
-  }, [searchTerm]);
+    fetchMovies(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
   return (
     <main>
       <div className='pattern'/>
