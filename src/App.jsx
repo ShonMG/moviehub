@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDebounce } from 'react-use'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -26,9 +27,13 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+
+  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm])
 
 
-  const fetchMovies = async () => {
+
+  const fetchMovies = async (query = '') => {
 
     setIsLoading(true);
     setErrorMessage('');
@@ -36,7 +41,9 @@ const App = () => {
 
 
      try {
-      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+      const endpoint = query ? 
+      `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`  : 
+      `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
       const response = await fetch(endpoint, API_OPTIONS);
       if (!response.ok) {
         
@@ -63,8 +70,8 @@ const App = () => {
   }
    
   useEffect( () => {
-    fetchMovies();
-  }, []);
+    fetchMovies(searchTerm);
+  }, [searchTerm]);
   return (
     <main>
       <div className='pattern'/>
